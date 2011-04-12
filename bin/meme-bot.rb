@@ -90,7 +90,11 @@ require 'yaml'
     end
 
     def random_mem
-      Nokogiri::HTML(Net::HTTP.get(URI.parse "http://memegenerator.net/")).xpath("//img[@class = 'large rotated']").first['src'] rescue nil
+      begin
+        Nokogiri::HTML(Net::HTTP.get(URI.parse "http://memegenerator.net/")).xpath("//img[@class = 'large rotated']").first['src']
+      rescue Exception
+        return "Problem with connection to memegenerator.net"
+      end
     end
   end
 end
