@@ -20,6 +20,10 @@ require 'yaml'
     msg nick, "                               |"
   end
 
+  on :channel, /\Amem!\z/ do
+    msg channel, random_mem
+  end
+
   on :private, /^help/ do
     msg nick, "MemBot usage:"
     msg nick, "list -- list of meme's templates"
@@ -27,7 +31,9 @@ require 'yaml'
     msg nick, "      for example: mem 'INCEPTION' 'go' 'deeperdeeper' 'lololo'"
     msg nick, "mem! '[template_name]' '[first_line]' '[sec_line]' -- get link to meme and send to channel"
     msg nick, "      for example: mem! 'INCEPTION' 'go' 'deeperdeeper' 'lololo'"
-    msg nick, "killer mem -- last generated mem"
+    msg nick, "killer mem -- ;-)"
+    msg nick, "last [number] -- last [number] memes"
+    msg nick, "mem! -- random mem from memegenerator.net"
   end
 
   on :private, /\Alist\z/ do
@@ -47,13 +53,10 @@ require 'yaml'
   end
 
   on :private, /\Alast (.*)\z/ do
-#    number = match[0].to_i
-#    database.sort[0...number].reverse.each do |mem|
-#      msg nick, "#{mem[0]} - #{mem[1]}"
-#    end
-     msg nick, "#{match[0]}"
-     msg nick, "#{database}"
-     msg nick, "LOL"
+    number = match[0].to_i
+    database.sort_by{|k,v| v}[0...number].reverse.each do |mem|
+      msg nick, "#{mem[0]} - #{mem[1]}"
+    end
   end
 
   helpers do
@@ -61,21 +64,33 @@ require 'yaml'
       generator   = message.shift
 
       meme = Meme.new generator
-      link = meme.generate *message
+      begin
+        link = meme.generate *message
 
-      db = YAML::load File.new("/home/lite/membot.yml", "w").read
-      db ||= {}
-      db["#{link}"] = Time.now
-      file = File.new("/home/lite/membot.yml", "w")
-      file.write(db.to_yaml)
-      file.close
+        db = YAML::load File.new("#{home_directory}/membot.yml", "r").read
+        db ||= {}
+        db["#{link}"] = Time.now if link
+        file = File.new("#{home_directory}/membot.yml", "w")
+        file.write(db.to_yaml)
+        file.close
+      rescue
+        link = "Something went wrong -- maybe number of arguments"
+      end
 
       link
     end
 
     def database
-      db   = YAML::load File.new("/home/lite/membot.yml", "w+").read
-    #  db ||= {}
+      db = YAML::load File.new("#{home_directory}/membot.yml", "r").read
+      db ||= {}      
+    end
+
+    def home_directory
+      "#{ENV['HOME']}/.memebot"
+    end
+
+    def random_mem
+      Nokogiri::HTML(Net::HTTP.get(URI.parse "http://memegenerator.net/")).xpath("//img[@class = 'large rotated']").first['src'] rescue nil
     end
   end
 end
