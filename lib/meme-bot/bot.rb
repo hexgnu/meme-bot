@@ -19,6 +19,10 @@ class MemeBot < Isaac::Bot
       @config = YAML::load File.new("#{directory}/config.yml", "r").read
     end
 
+    unless File.exist?("#{directory}/membot.yml")
+      File.new("#{directory}/membot.yml", "w").close                       
+    end
+
     @config
   end
 
