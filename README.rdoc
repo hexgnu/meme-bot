@@ -1,6 +1,41 @@
 = meme-bot
 
-Description goes here.
+== Instalation
+
+    gem install meme-bot
+    # and just
+    meme-bot
+
+== Configuration
+
+    # ~/.memebot/config.yml 
+    --- 
+    :nick: MemeBotSampleNick
+    :channel: "#custom-channel"
+    :server: irc.server.com
+    :port: "6667"
+
+== YAML database
+
+    # ~/.memebot/membot.yml
+
+== Usage
+
+    <MemeBot> MemBot usage:
+    <MemeBot> list -- list of meme's templates
+    <MemeBot> mem '[template_name]' '[first_line]' '[sec_line]' -- get link to meme
+    <MemeBot>       for example: mem 'INCEPTION' 'go' 'deeperdeeper' 'lololo'
+    <MemeBot> mem! '[template_name]' '[first_line]' '[sec_line]' -- get link to meme and send to channel
+    <MemeBot>       for example: mem! 'INCEPTION' 'go' 'deeperdeeper' 'lololo'
+    <MemeBot> killer mem -- ;-)
+    <MemeBot> last [number] -- last [number] memes
+    <MemeBot> mem! -- random mem from memegenerator.net
+
+'killer mem' and 'mem!' work on public
+
+== Test
+
+;-)
 
 == Contributing to meme-bot
  
