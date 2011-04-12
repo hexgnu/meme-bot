@@ -10,7 +10,7 @@ require 'yaml'
     msg "#{MemeBot.configuration[:channel]}", "MemeBot -- RailsCamp 2011 Wisla"
   end
 
-  on :public, /killer mem/ do
+  on :channel, /killer mem/ do
     msg channel, "_____"
     msg channel, "     |"
     msg channel, "      _____"
