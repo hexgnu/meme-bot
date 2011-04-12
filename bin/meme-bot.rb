@@ -11,12 +11,12 @@ require 'yaml'
   end
 
   on :public, /killer mem/ do
-    msg nick, "_____"
-    msg nick, "     |"
-    msg nick, "      _____"
-    msg nick, "           |"
-    msg nick, "            _kill -9 mlomnicki_"
-    msg nick, "                               |"
+    msg channel, "_____"
+    msg channel, "     |"
+    msg channel, "      _____"
+    msg channel, "           |"
+    msg channel, "            _kill -9 mlomnicki_"
+    msg channel, "                               |"
   end
 
   on :channel, /\Amem!\z/ do
