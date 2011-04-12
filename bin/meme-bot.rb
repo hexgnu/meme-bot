@@ -1,5 +1,4 @@
 $:.push File.expand_path("../../lib", __FILE__)
-require 'ruby-debug'
 require 'meme-bot'
 require 'meme'
 require 'yaml'
@@ -37,9 +36,11 @@ require 'yaml'
   end
 
   on :private, /\Alist\z/ do
+    list = []
     Meme::GENERATORS.each do |k,v|
-      msg nick, "#{k}"
+      list << k
     end
+    msg nick, list.join(" ")
   end
 
   on :private, /mem( '(.*)'){1,3}/ do
