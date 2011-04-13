@@ -1,6 +1,6 @@
-#source "http://rubygems.org"
+source "http://rubygems.org"
 
-gem "isaac", :path => "/home/lite/work/isaac"
+gem "isaac", '0.3.0'
 gem "eventmachine"
 gem "meme_generator"
 gem "ruby-debug"

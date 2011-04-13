@@ -74,7 +74,7 @@ require 'yaml'
         file = File.new("#{home_directory}/membot.yml", "w")
         file.write(db.to_yaml)
         file.close
-      rescue
+      rescue Exception
         link = "Something went wrong -- maybe number of arguments"
       end
 
